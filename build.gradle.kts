@@ -4,7 +4,7 @@ plugins {
     id("java")
 }
 
-group = "com.wizardlybump17.resourcepack"
+group = "com.wizardlybump17.enchantments"
 version = "0.0.1"
 
 repositories {
