@@ -6,7 +6,6 @@ import com.wizardlybump17.enchantments.api.listener.EnchantmentListener;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
-import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-@SuperBuilder
 @AllArgsConstructor
 public abstract class Enchantment implements Identifiable {
 
@@ -47,21 +45,5 @@ public abstract class Enchantment implements Identifiable {
 
     public final boolean isValid() {
         return !(this instanceof InvalidEnchantment);
-    }
-
-    public abstract static class EnchantmentBuilder {
-
-        public @NonNull EnchantmentBuilder addListener(@NonNull EnchantmentListener listener) {
-            listeners.put(listener.getKey(), Collections.singletonList(listener));
-            return this;
-        }
-
-        public @NonNull EnchantmentBuilder removeListener(@NonNull EnchantmentListener listener) {
-            listeners.computeIfPresent(listener.getKey(), (key, listeners) -> {
-                listeners.remove(listener);
-                return listeners;
-            });
-            return this;
-        }
     }
 }
