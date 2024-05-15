@@ -6,4 +6,8 @@ public interface EnchantmentListener {
 
     @NonNull
     Object getKey();
+
+    boolean register();
+
+    void unregister();
 }
