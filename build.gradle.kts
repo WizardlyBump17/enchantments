@@ -1,34 +1,32 @@
 plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("io.papermc.paperweight.userdev") version "1.5.11"
+    id("io.papermc.paperweight.userdev") version "1.5.11" apply false
     id("java")
 }
 
-group = "com.wizardlybump17.enchantments"
-version = "0.0.1"
+allprojects {
+    apply(plugin = "java")
 
-repositories {
-    mavenCentral()
+    group = "com.wizardlybump17.enchantments"
+    version = "0.0.1"
 }
 
-val lombok = "1.18.32"
-val jetbrainsAnnotations = "24.1.0"
-val paper = "1.17.1-R0.1-20220414.034903-210"
-
-dependencies {
-    compileOnly("org.projectlombok:lombok:${lombok}")
-    compileOnly("org.jetbrains:annotations:${jetbrainsAnnotations}")
-    paperweightDevelopmentBundle("io.papermc.paper:dev-bundle:${paper}")
-    annotationProcessor("org.projectlombok:lombok:${lombok}")
-}
-
-tasks {
-    compileJava {
-        options.encoding = Charsets.UTF_8.name()
-        options.release.set(16)
+subprojects {
+    repositories {
+        mavenCentral()
+        maven {
+            url = uri("https://maven.pkg.github.com/WizardlyBump17/WLib")
+            credentials {
+                username = (project.findProperty("gpr.user") ?: System.getenv("USERNAME")) as String
+                password = (project.findProperty("gpr.key") ?: System.getenv("TOKEN")) as String
+            }
+        }
     }
 
-    assemble {
-        dependsOn(reobfJar)
+    tasks {
+        compileJava {
+            options.encoding = Charsets.UTF_8.name()
+            options.release.set(16)
+        }
     }
 }
