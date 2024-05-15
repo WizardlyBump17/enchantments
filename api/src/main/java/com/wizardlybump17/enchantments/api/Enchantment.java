@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NonNull;
 
 @Data
-public class Enchantment implements Identifiable {
+public abstract class Enchantment implements Identifiable {
 
     private final @NonNull Id id;
     private String name;
