@@ -5,6 +5,7 @@ import com.wizardlybump17.enchantments.api.id.Id;
 import com.wizardlybump17.enchantments.api.item.Item;
 import com.wizardlybump17.enchantments.api.registry.EnchantmentRegistry;
 import com.wizardlybump17.enchantments.paper.persistence.EnchantmentsMapType;
+import com.wizardlybump17.enchantments.paper.util.Converter;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PaperItem implements Item {
 
-    public static final @NonNull NamespacedKey ENCHANTMENTS = new NamespacedKey("WB17_Enchantments", "Enchantments");
+    public static final @NonNull NamespacedKey ENCHANTMENTS = Converter.toNamespacedKey(Id.ENCHANTMENTS);
 
     private final @NonNull ItemStack item;
 
