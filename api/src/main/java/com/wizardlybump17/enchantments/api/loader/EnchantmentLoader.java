@@ -5,7 +5,6 @@ import lombok.NonNull;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +27,7 @@ public abstract class EnchantmentLoader {
     public @NonNull List<Enchantment> loadAll(@NonNull File folder) {
         File[] files = folder.listFiles();
         if (files == null)
-            return Collections.emptyList();
+            throw new IllegalStateException("The given File is not a directory");
 
         List<Enchantment> enchantments = new ArrayList<>();
         for (File file : files) {
