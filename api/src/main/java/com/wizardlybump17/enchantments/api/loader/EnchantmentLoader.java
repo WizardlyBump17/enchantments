@@ -32,6 +32,14 @@ public abstract class EnchantmentLoader {
 
         List<Enchantment> enchantments = new ArrayList<>();
         for (File file : files) {
+            if (!isValidFile(file))
+                continue;
+
+            if (file.isDirectory()) {
+                enchantments.addAll(loadAll(file));
+                continue;
+            }
+
             Optional<Enchantment> optional = load(file);
             optional.ifPresent(enchantment -> {
                 if (enchantment.register())
@@ -40,5 +48,9 @@ public abstract class EnchantmentLoader {
         }
 
         return enchantments;
+    }
+
+    protected boolean isValidFile(@NonNull File file) {
+        return !file.getName().startsWith(".");
     }
 }
