@@ -7,3 +7,4 @@ pluginManagement {
 
 rootProject.name = "enchantments"
 include("api")
+include("paper")
