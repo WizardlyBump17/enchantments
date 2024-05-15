@@ -1,11 +1,11 @@
 package com.wizardlybump17.enchantments.api.registry;
 
 import com.wizardlybump17.enchantments.api.Enchantment;
+import com.wizardlybump17.enchantments.api.enchantment.InvalidEnchantment;
 import com.wizardlybump17.enchantments.api.id.Id;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.Map;
@@ -18,20 +18,23 @@ public class EnchantmentRegistry {
 
     private final @NonNull Map<Id, Enchantment> enchantments = new TreeMap<>();
 
-    public @Nullable Enchantment register(@NonNull Enchantment enchantment) {
-        return enchantments.put(enchantment.getId(), enchantment);
+    public boolean register(@NonNull Enchantment enchantment) {
+        return enchantments.put(enchantment.getId(), enchantment) == null;
     }
 
-    public @Nullable Enchantment unregister(@NonNull Enchantment enchantment) {
-        return enchantments.remove(enchantment.getId());
+    public @NonNull Enchantment unregister(@NonNull Enchantment enchantment) {
+        Enchantment removed = enchantments.remove(enchantment.getId());
+        return removed == null ? new InvalidEnchantment(enchantment.getId()) : removed;
     }
 
-    public @Nullable Enchantment unregister(@NonNull Id id) {
-        return enchantments.remove(id);
+    public @NonNull Enchantment unregister(@NonNull Id id) {
+        Enchantment removed = enchantments.remove(id);
+        return removed == null ? new InvalidEnchantment(id) : removed;
     }
 
-    public @Nullable Enchantment get(@NonNull Id id) {
-        return enchantments.get(id);
+    public @NonNull Enchantment get(@NonNull Id id) {
+        Enchantment enchantment = enchantments.get(id);
+        return enchantment == null ? new InvalidEnchantment(id) : enchantment;
     }
 
     public boolean has(@NonNull Enchantment enchantment) {
