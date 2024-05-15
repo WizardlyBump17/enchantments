@@ -43,6 +43,11 @@ public abstract class Enchantment implements Identifiable {
             listener.unregister(this);
     }
 
+    public void clearListeners() {
+        listeners.values().forEach(listeners -> listeners.forEach(listener -> listener.unregister(this)));
+        listeners.clear();
+    }
+
     public final boolean isValid() {
         return !(this instanceof InvalidEnchantment);
     }
