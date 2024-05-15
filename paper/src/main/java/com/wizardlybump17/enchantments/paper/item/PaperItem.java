@@ -1,6 +1,6 @@
 package com.wizardlybump17.enchantments.paper.item;
 
-import com.wizardlybump17.enchantments.api.Enchantment;
+import com.wizardlybump17.enchantments.api.enchantment.Enchantment;
 import com.wizardlybump17.enchantments.api.id.Id;
 import com.wizardlybump17.enchantments.api.item.Item;
 import com.wizardlybump17.enchantments.api.registry.EnchantmentRegistry;

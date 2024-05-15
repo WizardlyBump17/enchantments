@@ -1,4 +1,4 @@
-package com.wizardlybump17.enchantments.api;
+package com.wizardlybump17.enchantments.api.enchantment;
 
 import com.wizardlybump17.enchantments.api.id.Id;
 import com.wizardlybump17.enchantments.api.id.Identifiable;

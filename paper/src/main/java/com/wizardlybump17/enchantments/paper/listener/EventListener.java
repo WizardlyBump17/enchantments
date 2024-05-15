@@ -1,6 +1,6 @@
 package com.wizardlybump17.enchantments.paper.listener;
 
-import com.wizardlybump17.enchantments.api.Enchantment;
+import com.wizardlybump17.enchantments.api.enchantment.Enchantment;
 import com.wizardlybump17.enchantments.api.listener.EnchantmentListener;
 import lombok.Builder;
 import lombok.NonNull;

@@ -1,6 +1,6 @@
 package com.wizardlybump17.enchantments.api.listener;
 
-import com.wizardlybump17.enchantments.api.Enchantment;
+import com.wizardlybump17.enchantments.api.enchantment.Enchantment;
 import lombok.NonNull;
 
 public interface EnchantmentListener {

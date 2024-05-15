@@ -1,6 +1,5 @@
 package com.wizardlybump17.enchantments.api.enchantment;
 
-import com.wizardlybump17.enchantments.api.Enchantment;
 import com.wizardlybump17.enchantments.api.id.Id;
 import lombok.NonNull;
 

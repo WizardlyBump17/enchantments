@@ -1,6 +1,6 @@
 package com.wizardlybump17.enchantments.paper.persistence;
 
-import com.wizardlybump17.enchantments.api.Enchantment;
+import com.wizardlybump17.enchantments.api.enchantment.Enchantment;
 import com.wizardlybump17.enchantments.api.registry.EnchantmentRegistry;
 import com.wizardlybump17.enchantments.paper.util.Converter;
 import lombok.NonNull;
