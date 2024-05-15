@@ -6,10 +6,7 @@ import com.wizardlybump17.enchantments.api.listener.EnchantmentListener;
 import lombok.Data;
 import lombok.NonNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Data
 public abstract class Enchantment implements Identifiable {
@@ -17,7 +14,7 @@ public abstract class Enchantment implements Identifiable {
     private final @NonNull Id id;
     private String name;
     private int maxLevel;
-    private final @NonNull Map<Object, List<EnchantmentListener>> listeners;
+    private final @NonNull Map<Object, List<EnchantmentListener>> listeners = new HashMap<>();
 
     public void addListener(@NonNull EnchantmentListener listener) {
         if (listener.register(this))
