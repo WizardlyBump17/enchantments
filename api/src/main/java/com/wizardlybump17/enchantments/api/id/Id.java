@@ -16,4 +16,9 @@ public record Id(@NonNull String namespace, @NonNull String key) implements Comp
     public int compareTo(@NonNull Id other) {
         return toString().compareTo(other.toString());
     }
+
+    public static @NonNull Id fromString(@NonNull String string) {
+        String[] split = string.split(":", 2);
+        return new Id(split.length == 1 ? NAMESPACE : split[0], split.length == 1 ? split[0] : split[1]);
+    }
 }
