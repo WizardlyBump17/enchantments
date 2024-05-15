@@ -23,8 +23,7 @@ tasks {
 
     publishing {
         publications {
-            create<MavenPublication>("reobf") {
-                from(project.components["java"])
+            getByName<MavenPublication>("maven") {
                 artifact(reobfJar)
             }
         }
