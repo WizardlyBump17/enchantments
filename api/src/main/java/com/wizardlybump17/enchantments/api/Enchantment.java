@@ -5,15 +5,17 @@ import com.wizardlybump17.enchantments.api.id.Identifiable;
 import com.wizardlybump17.enchantments.api.listener.EnchantmentListener;
 import lombok.Data;
 import lombok.NonNull;
+import lombok.experimental.SuperBuilder;
 
 import java.util.*;
 
 @Data
+@SuperBuilder
 public abstract class Enchantment implements Identifiable {
 
     private final @NonNull Id id;
-    private String name;
-    private int maxLevel;
+    private final String name;
+    private final int maxLevel;
     private final @NonNull Map<Object, List<EnchantmentListener>> listeners = new HashMap<>();
 
     public void addListener(@NonNull EnchantmentListener listener) {
