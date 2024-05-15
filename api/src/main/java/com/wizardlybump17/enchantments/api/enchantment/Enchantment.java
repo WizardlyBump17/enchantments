@@ -1,5 +1,6 @@
 package com.wizardlybump17.enchantments.api.enchantment;
 
+import com.wizardlybump17.enchantments.api.holder.EnchantmentHolder;
 import com.wizardlybump17.enchantments.api.id.Id;
 import com.wizardlybump17.enchantments.api.id.Identifiable;
 import com.wizardlybump17.enchantments.api.listener.EnchantmentListener;
@@ -16,6 +17,7 @@ import java.util.Map;
 @AllArgsConstructor
 public abstract class Enchantment implements Identifiable {
 
+    private final @NonNull EnchantmentHolder holder;
     private final @NonNull Id id;
     private final String name;
     private final int maxLevel;

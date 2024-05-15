@@ -3,6 +3,7 @@ package com.wizardlybump17.enchantments.paper.enchantment;
 import com.wizardlybump17.enchantments.api.enchantment.Enchantment;
 import com.wizardlybump17.enchantments.api.id.Id;
 import com.wizardlybump17.enchantments.api.listener.EnchantmentListener;
+import com.wizardlybump17.enchantments.paper.holder.PaperEnchantmentHolder;
 import lombok.NonNull;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;
@@ -13,8 +14,8 @@ import java.util.Map;
 
 public abstract class PaperEnchantment extends Enchantment implements ConfigurationSerializable {
 
-    public PaperEnchantment(@NonNull Id id, String name, int maxLevel, @NonNull Map<Object, List<EnchantmentListener>> listeners) {
-        super(id, name, maxLevel, listeners);
+    public PaperEnchantment(@NonNull PaperEnchantmentHolder holder, @NonNull Id id, String name, int maxLevel, @NonNull Map<Object, List<EnchantmentListener>> listeners) {
+        super(holder, id, name, maxLevel, listeners);
     }
 
     @Override
