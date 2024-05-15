@@ -4,7 +4,6 @@ import com.wizardlybump17.enchantments.api.holder.EnchantmentHolder;
 import com.wizardlybump17.enchantments.api.id.Id;
 import com.wizardlybump17.enchantments.api.id.Identifiable;
 import com.wizardlybump17.enchantments.api.listener.EnchantmentListener;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-@AllArgsConstructor
 public abstract class Enchantment implements Identifiable {
 
     private final @NonNull EnchantmentHolder holder;
@@ -22,6 +20,20 @@ public abstract class Enchantment implements Identifiable {
     private final String name;
     private final int maxLevel;
     private final @NonNull Map<Object, List<EnchantmentListener>> listeners;
+
+    public Enchantment(@NonNull EnchantmentHolder holder, @NonNull Id id, String name, int maxLevel, @NonNull Map<Object, List<EnchantmentListener>> listeners) {
+        this.holder = holder;
+        this.id = id;
+        this.name = name;
+        this.maxLevel = maxLevel;
+        this.listeners = listeners;
+        registerListeners();
+    }
+
+    protected void registerListeners() {
+        for (List<EnchantmentListener> listeners : listeners.values())
+            listeners.removeIf(listener -> !listener.register(this));
+    }
 
     public void addListener(@NonNull EnchantmentListener listener) {
         if (listener.register(this))
