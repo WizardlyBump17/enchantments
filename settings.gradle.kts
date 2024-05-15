@@ -8,3 +8,5 @@ pluginManagement {
 rootProject.name = "enchantments"
 include("api")
 include("paper")
+include("paper:wlib")
+findProject(":paper:wlib")?.name = "wlib"
