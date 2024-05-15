@@ -51,4 +51,12 @@ public abstract class Enchantment implements Identifiable {
     public final boolean isValid() {
         return !(this instanceof InvalidEnchantment);
     }
+
+    public boolean register() {
+        return true;
+    }
+
+    public void unregister() {
+        clearListeners();
+    }
 }
