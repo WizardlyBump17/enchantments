@@ -1,5 +1,5 @@
 plugins {
-    id("io.papermc.paperweight.userdev") version "1.5.11"
+    id("io.papermc.paperweight.userdev") version "1.7.1"
 }
 
 val lombok = "1.18.32"
@@ -15,4 +15,19 @@ dependencies {
     paperweightDevelopmentBundle("io.papermc.paper:dev-bundle:${paper}")
 
     implementation(project(":api"))
+}
+
+tasks {
+    assemble {
+        dependsOn(reobfJar)
+    }
+
+    publishing {
+        publications {
+            create<MavenPublication>("reobf") {
+                from(project.components["java"])
+                artifact(reobfJar)
+            }
+        }
+    }
 }
