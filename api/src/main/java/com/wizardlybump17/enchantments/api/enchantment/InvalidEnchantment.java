@@ -8,6 +8,6 @@ import java.util.Collections;
 public final class InvalidEnchantment extends Enchantment {
 
     public InvalidEnchantment(@NonNull Id id) {
-        super(id, Collections.emptyMap());
+        super(id, "Invalid", 0, Collections.emptyMap());
     }
 }

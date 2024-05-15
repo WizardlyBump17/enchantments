@@ -3,21 +3,25 @@ package com.wizardlybump17.enchantments.api.enchantment;
 import com.wizardlybump17.enchantments.api.id.Id;
 import com.wizardlybump17.enchantments.api.id.Identifiable;
 import com.wizardlybump17.enchantments.api.listener.EnchantmentListener;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 @Data
 @SuperBuilder
+@AllArgsConstructor
 public abstract class Enchantment implements Identifiable {
 
     private final @NonNull Id id;
     private final String name;
     private final int maxLevel;
-    private final @NonNull @Builder.Default Map<Object, List<EnchantmentListener>> listeners = new HashMap<>();
+    private final @NonNull Map<Object, List<EnchantmentListener>> listeners;
 
     public void addListener(@NonNull EnchantmentListener listener) {
         if (listener.register(this))
@@ -48,12 +52,12 @@ public abstract class Enchantment implements Identifiable {
     public abstract static class EnchantmentBuilder {
 
         public @NonNull EnchantmentBuilder addListener(@NonNull EnchantmentListener listener) {
-            listeners$value.put(listener.getKey(), Collections.singletonList(listener));
+            listeners.put(listener.getKey(), Collections.singletonList(listener));
             return this;
         }
 
         public @NonNull EnchantmentBuilder removeListener(@NonNull EnchantmentListener listener) {
-            listeners$value.computeIfPresent(listener.getKey(), (key, listeners) -> {
+            listeners.computeIfPresent(listener.getKey(), (key, listeners) -> {
                 listeners.remove(listener);
                 return listeners;
             });
