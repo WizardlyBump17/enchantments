@@ -1,5 +1,6 @@
 package com.wizardlybump17.enchantments.paper.listener;
 
+import com.wizardlybump17.enchantments.api.Enchantment;
 import com.wizardlybump17.enchantments.api.listener.EnchantmentListener;
 import lombok.Builder;
 import lombok.NonNull;
@@ -28,13 +29,13 @@ public class EventListener<E extends Event> implements EnchantmentListener, List
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean register() {
+    public boolean register(@NonNull Enchantment enchantment) {
         Bukkit.getPluginManager().registerEvent(eventClass, this, priority, (listener, event) -> executor.accept((E) event), plugin, ignoreCancelled);
         return true;
     }
 
     @Override
-    public void unregister() {
+    public void unregister(@NonNull Enchantment enchantment) {
         HandlerList.unregisterAll(this);
     }
 }

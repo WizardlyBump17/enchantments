@@ -1,5 +1,6 @@
 package com.wizardlybump17.enchantments.api.listener;
 
+import com.wizardlybump17.enchantments.api.Enchantment;
 import lombok.NonNull;
 
 public interface EnchantmentListener {
@@ -7,7 +8,7 @@ public interface EnchantmentListener {
     @NonNull
     Object getKey();
 
-    boolean register();
+    boolean register(@NonNull Enchantment enchantment);
 
-    void unregister();
+    void unregister(@NonNull Enchantment enchantment);
 }
