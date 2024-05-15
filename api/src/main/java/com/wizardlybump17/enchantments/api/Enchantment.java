@@ -32,7 +32,7 @@ public abstract class Enchantment implements Identifiable {
     }
 
     public boolean hasListener(@NonNull EnchantmentListener listener) {
-        return listeners.computeIfAbsent(listener, $ -> Collections.emptyList()).contains(listener);
+        return listeners.getOrDefault(listener.getKey(), Collections.emptyList()).contains(listener);
     }
 
     public void clearListeners(@NonNull Object key) {
