@@ -43,6 +43,8 @@ public abstract class EnchantmentLoader {
             optional.ifPresent(enchantment -> {
                 if (enchantment.register())
                     enchantments.add(enchantment);
+                else
+                    enchantment.unregister();
             });
         }
 
