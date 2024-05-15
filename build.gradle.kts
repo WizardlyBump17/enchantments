@@ -18,13 +18,6 @@ subprojects {
 
     repositories {
         mavenCentral()
-        maven {
-            url = uri("https://maven.pkg.github.com/WizardlyBump17/WLib")
-            credentials {
-                username = (project.findProperty("gpr.user") ?: System.getenv("USERNAME")) as String
-                password = (project.findProperty("gpr.key") ?: System.getenv("TOKEN")) as String
-            }
-        }
     }
 
     tasks {
