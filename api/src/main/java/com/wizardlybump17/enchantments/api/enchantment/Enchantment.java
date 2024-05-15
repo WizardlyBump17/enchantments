@@ -41,6 +41,10 @@ public abstract class Enchantment implements Identifiable {
             listener.unregister(this);
     }
 
+    public final boolean isValid() {
+        return !(this instanceof InvalidEnchantment);
+    }
+
     public abstract static class EnchantmentBuilder {
 
         public @NonNull EnchantmentBuilder addListener(@NonNull EnchantmentListener listener) {
