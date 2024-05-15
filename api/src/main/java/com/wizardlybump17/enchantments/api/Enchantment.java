@@ -20,12 +20,14 @@ public abstract class Enchantment implements Identifiable {
     private final @NonNull Map<Object, List<EnchantmentListener>> listeners;
 
     public void addListener(@NonNull EnchantmentListener listener) {
-        listeners.computeIfAbsent(listener.getKey(), $ -> new ArrayList<>()).add(listener);
+        if (listener.register(this))
+            listeners.computeIfAbsent(listener.getKey(), $ -> new ArrayList<>()).add(listener);
     }
 
     public void removeListener(@NonNull EnchantmentListener listener) {
         this.listeners.computeIfPresent(listener.getKey(), (key, listeners) -> {
             listeners.remove(listener);
+            listener.unregister(this);
             return listeners;
         });
     }
@@ -35,6 +37,7 @@ public abstract class Enchantment implements Identifiable {
     }
 
     public void clearListeners(@NonNull Object key) {
-        listeners.remove(key);
+        for (EnchantmentListener listener : listeners.remove(key))
+            listener.unregister(this);
     }
 }
