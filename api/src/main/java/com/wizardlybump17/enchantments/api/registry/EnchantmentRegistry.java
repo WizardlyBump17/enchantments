@@ -48,4 +48,8 @@ public class EnchantmentRegistry {
     public @NonNull Map<Id, Enchantment<?>> getEnchantments() {
         return Collections.unmodifiableMap(enchantments);
     }
+
+    public void clear() {
+        enchantments.clear();
+    }
 }
