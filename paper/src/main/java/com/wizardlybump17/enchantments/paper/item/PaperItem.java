@@ -42,7 +42,11 @@ public class PaperItem implements Item<ItemStack> {
             return;
 
         Map<Enchantment<?>, Integer> enchantments = getEnchantments();
-        enchantments.put(enchantment, level);
+        if (level < 1)
+            enchantments.remove(enchantment);
+        else
+            enchantments.put(enchantment, level);
+
         saveEnchantments(enchantments);
     }
 
