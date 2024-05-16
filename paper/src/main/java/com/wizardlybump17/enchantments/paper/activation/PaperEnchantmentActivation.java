@@ -7,7 +7,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public abstract class PaperEnchantmentActivation extends EnchantmentActivation implements ConfigurationSerializable {
+public class PaperEnchantmentActivation extends EnchantmentActivation implements ConfigurationSerializable {
 
     public PaperEnchantmentActivation(int level, double chance) {
         super(level, chance);
