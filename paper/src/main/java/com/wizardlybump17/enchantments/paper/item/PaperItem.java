@@ -20,7 +20,7 @@ import java.util.Map;
 
 @Getter
 @RequiredArgsConstructor
-public class PaperItem implements Item {
+public class PaperItem implements Item<ItemStack> {
 
     public static final @NonNull NamespacedKey ENCHANTMENTS = Converter.toNamespacedKey(Id.ENCHANTMENTS);
 
@@ -81,5 +81,10 @@ public class PaperItem implements Item {
         PersistentDataContainer container = meta.getPersistentDataContainer();
         container.set(ENCHANTMENTS, EnchantmentsMapType.INSTANCE, enchantments);
         item.setItemMeta(meta);
+    }
+
+    @Override
+    public @NonNull ItemStack getHandle() {
+        return item;
     }
 }

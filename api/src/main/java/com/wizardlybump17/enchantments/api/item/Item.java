@@ -6,7 +6,7 @@ import lombok.NonNull;
 
 import java.util.Map;
 
-public interface Item {
+public interface Item<H> {
 
     @NonNull
     Map<Enchantment<?>, Integer> getEnchantments();
@@ -26,4 +26,6 @@ public interface Item {
     int getEnchantmentLevel(@NonNull Enchantment<?> enchantment);
 
     int getEnchantmentLevel(@NonNull Id id);
+
+    @NonNull H getHandle();
 }
