@@ -28,4 +28,6 @@ public interface Item<H> {
     int getEnchantmentLevel(@NonNull Id id);
 
     @NonNull H getHandle();
+
+    boolean isValid();
 }

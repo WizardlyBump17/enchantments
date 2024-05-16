@@ -28,12 +28,19 @@ public class PaperItem implements Item<ItemStack> {
 
     @Override
     public @NonNull Map<Enchantment<?>, Integer> getEnchantments() {
-        Map<Enchantment<?>, Integer> enchantments = item.getItemMeta().getPersistentDataContainer().get(ENCHANTMENTS, EnchantmentsMapType.INSTANCE);
+        if (!isValid())
+            return Collections.emptyMap();
+
+        ItemMeta meta = item.getItemMeta();
+        Map<Enchantment<?>, Integer> enchantments = meta.getPersistentDataContainer().get(ENCHANTMENTS, EnchantmentsMapType.INSTANCE);
         return enchantments == null ? new HashMap<>() : enchantments;
     }
 
     @Override
     public void addEnchantment(@NonNull Enchantment<?> enchantment, int level) {
+        if (!isValid())
+            return;
+
         Map<Enchantment<?>, Integer> enchantments = getEnchantments();
         enchantments.put(enchantment, level);
         saveEnchantments(enchantments);
@@ -41,6 +48,9 @@ public class PaperItem implements Item<ItemStack> {
 
     @Override
     public void removeEnchantment(@NonNull Enchantment<?> enchantment) {
+        if (!isValid())
+            return;
+
         Map<Enchantment<?>, Integer> enchantments = getEnchantments();
         enchantments.remove(enchantment);
         saveEnchantments(enchantments);
@@ -77,6 +87,9 @@ public class PaperItem implements Item<ItemStack> {
     }
 
     protected void saveEnchantments(@NonNull Map<Enchantment<?>, Integer> enchantments) {
+        if (!isValid())
+            return;
+
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer container = meta.getPersistentDataContainer();
         container.set(ENCHANTMENTS, EnchantmentsMapType.INSTANCE, enchantments);
@@ -86,5 +99,10 @@ public class PaperItem implements Item<ItemStack> {
     @Override
     public @NonNull ItemStack getHandle() {
         return item;
+    }
+
+    @Override
+    public boolean isValid() {
+        return item.getItemMeta() != null;
     }
 }
