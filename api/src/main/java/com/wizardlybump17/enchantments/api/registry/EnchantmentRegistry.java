@@ -16,28 +16,28 @@ public class EnchantmentRegistry {
 
     public static final @NonNull EnchantmentRegistry INSTANCE = new EnchantmentRegistry();
 
-    private final @NonNull Map<Id, Enchantment> enchantments = new TreeMap<>();
+    private final @NonNull Map<Id, Enchantment<?>> enchantments = new TreeMap<>();
 
-    public boolean register(@NonNull Enchantment enchantment) {
+    public boolean register(@NonNull Enchantment<?> enchantment) {
         return enchantments.put(enchantment.getId(), enchantment) == null;
     }
 
-    public @NonNull Enchantment unregister(@NonNull Enchantment enchantment) {
-        Enchantment removed = enchantments.remove(enchantment.getId());
+    public @NonNull Enchantment<?> unregister(@NonNull Enchantment<?> enchantment) {
+        Enchantment<?> removed = enchantments.remove(enchantment.getId());
         return removed == null ? new InvalidEnchantment(enchantment.getId()) : removed;
     }
 
-    public @NonNull Enchantment unregister(@NonNull Id id) {
-        Enchantment removed = enchantments.remove(id);
+    public @NonNull Enchantment<?> unregister(@NonNull Id id) {
+        Enchantment<?> removed = enchantments.remove(id);
         return removed == null ? new InvalidEnchantment(id) : removed;
     }
 
-    public @NonNull Enchantment get(@NonNull Id id) {
-        Enchantment enchantment = enchantments.get(id);
+    public @NonNull Enchantment<?> get(@NonNull Id id) {
+        Enchantment<?> enchantment = enchantments.get(id);
         return enchantment == null ? new InvalidEnchantment(id) : enchantment;
     }
 
-    public boolean has(@NonNull Enchantment enchantment) {
+    public boolean has(@NonNull Enchantment<?> enchantment) {
         return enchantments.containsKey(enchantment.getId());
     }
 
@@ -45,7 +45,7 @@ public class EnchantmentRegistry {
         return enchantments.containsKey(id);
     }
 
-    public @NonNull Map<Id, Enchantment> getEnchantments() {
+    public @NonNull Map<Id, Enchantment<?>> getEnchantments() {
         return Collections.unmodifiableMap(enchantments);
     }
 }

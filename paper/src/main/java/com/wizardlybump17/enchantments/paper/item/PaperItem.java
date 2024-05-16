@@ -27,21 +27,21 @@ public class PaperItem implements Item {
     private final @NonNull ItemStack item;
 
     @Override
-    public @NonNull Map<Enchantment, Integer> getEnchantments() {
-        Map<Enchantment, Integer> enchantments = item.getItemMeta().getPersistentDataContainer().get(ENCHANTMENTS, EnchantmentsMapType.INSTANCE);
+    public @NonNull Map<Enchantment<?>, Integer> getEnchantments() {
+        Map<Enchantment<?>, Integer> enchantments = item.getItemMeta().getPersistentDataContainer().get(ENCHANTMENTS, EnchantmentsMapType.INSTANCE);
         return enchantments == null ? new HashMap<>() : enchantments;
     }
 
     @Override
-    public void addEnchantment(@NonNull Enchantment enchantment, int level) {
-        Map<Enchantment, Integer> enchantments = getEnchantments();
+    public void addEnchantment(@NonNull Enchantment<?> enchantment, int level) {
+        Map<Enchantment<?>, Integer> enchantments = getEnchantments();
         enchantments.put(enchantment, level);
         saveEnchantments(enchantments);
     }
 
     @Override
-    public void removeEnchantment(@NonNull Enchantment enchantment) {
-        Map<Enchantment, Integer> enchantments = getEnchantments();
+    public void removeEnchantment(@NonNull Enchantment<?> enchantment) {
+        Map<Enchantment<?>, Integer> enchantments = getEnchantments();
         enchantments.remove(enchantment);
         saveEnchantments(enchantments);
     }
@@ -57,7 +57,7 @@ public class PaperItem implements Item {
     }
 
     @Override
-    public boolean hasEnchantment(@NonNull Enchantment enchantment) {
+    public boolean hasEnchantment(@NonNull Enchantment<?> enchantment) {
         return getEnchantments().containsKey(enchantment);
     }
 
@@ -67,7 +67,7 @@ public class PaperItem implements Item {
     }
 
     @Override
-    public int getEnchantmentLevel(@NonNull Enchantment enchantment) {
+    public int getEnchantmentLevel(@NonNull Enchantment<?> enchantment) {
         return getEnchantments().getOrDefault(enchantment, 0);
     }
 
@@ -76,7 +76,7 @@ public class PaperItem implements Item {
         return getEnchantmentLevel(EnchantmentRegistry.INSTANCE.get(id));
     }
 
-    protected void saveEnchantments(@NonNull Map<Enchantment, Integer> enchantments) {
+    protected void saveEnchantments(@NonNull Map<Enchantment<?>, Integer> enchantments) {
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer container = meta.getPersistentDataContainer();
         container.set(ENCHANTMENTS, EnchantmentsMapType.INSTANCE, enchantments);
