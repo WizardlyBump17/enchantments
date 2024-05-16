@@ -7,6 +7,11 @@ public record Id(@NonNull String namespace, @NonNull String key) implements Comp
     public static final @NonNull String NAMESPACE = "WB17_Enchantments";
     public static @NonNull Id ENCHANTMENTS = new Id(NAMESPACE, "Enchantments");
 
+    public Id {
+        namespace = namespace.toLowerCase();
+        key = key.toLowerCase();
+    }
+
     @Override
     public @NonNull String toString() {
         return namespace + ":" + key;
