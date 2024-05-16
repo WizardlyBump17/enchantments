@@ -22,14 +22,14 @@ public abstract class EnchantmentLoader {
         return instance;
     }
 
-    public abstract @NonNull Optional<Enchantment> load(@NonNull File file);
+    public abstract @NonNull Optional<Enchantment<?>> load(@NonNull File file);
 
-    public @NonNull List<Enchantment> loadAll(@NonNull File folder) {
+    public @NonNull List<Enchantment<?>> loadAll(@NonNull File folder) {
         File[] files = folder.listFiles();
         if (files == null)
             throw new IllegalStateException("The given File is not a directory");
 
-        List<Enchantment> enchantments = new ArrayList<>();
+        List<Enchantment<?>> enchantments = new ArrayList<>();
         for (File file : files) {
             if (!isValidFile(file))
                 continue;
@@ -39,7 +39,7 @@ public abstract class EnchantmentLoader {
                 continue;
             }
 
-            Optional<Enchantment> optional = load(file);
+            Optional<Enchantment<?>> optional = load(file);
             optional.ifPresent(enchantment -> {
                 if (enchantment.register())
                     enchantments.add(enchantment);

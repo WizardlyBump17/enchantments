@@ -11,9 +11,9 @@ import java.util.Optional;
 public class PaperEnchantmentLoader extends EnchantmentLoader {
 
     @Override
-    public @NonNull Optional<Enchantment> load(@NonNull File file) {
+    public @NonNull Optional<Enchantment<?>> load(@NonNull File file) {
         YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
-        Enchantment enchantment = configuration.getObject("data", Enchantment.class);
+        Enchantment<?> enchantment = configuration.getObject("data", Enchantment.class);
         return Optional.ofNullable(enchantment);
     }
 }
