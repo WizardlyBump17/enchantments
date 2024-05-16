@@ -105,4 +105,8 @@ public class PaperItem implements Item<ItemStack> {
     public boolean isValid() {
         return item.getItemMeta() != null;
     }
+
+    public static @NonNull PaperItem of(@NonNull ItemStack item) {
+        return new PaperItem(item);
+    }
 }
