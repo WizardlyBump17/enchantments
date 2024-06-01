@@ -4,6 +4,7 @@ import com.wizardlybump17.enchantments.api.enchantment.Enchantment;
 import com.wizardlybump17.enchantments.api.id.Id;
 import com.wizardlybump17.enchantments.api.item.Item;
 import com.wizardlybump17.enchantments.api.registry.EnchantmentRegistry;
+import com.wizardlybump17.enchantments.paper.enchantment.VanillaEnchantment;
 import com.wizardlybump17.enchantments.paper.persistence.EnchantmentsMapType;
 import com.wizardlybump17.enchantments.paper.util.Converter;
 import lombok.Getter;
@@ -48,6 +49,15 @@ public class PaperItem implements Item<ItemStack> {
             enchantments.put(enchantment, level);
 
         saveEnchantments(enchantments);
+
+        if (!(enchantment instanceof VanillaEnchantment vanillaEnchantment))
+            return;
+
+        org.bukkit.enchantments.Enchantment vanilla = vanillaEnchantment.getVanilla();
+        if (level < 1)
+            item.removeEnchantment(vanilla);
+        else
+            item.addUnsafeEnchantment(vanilla, level);
     }
 
     @Override
@@ -58,6 +68,8 @@ public class PaperItem implements Item<ItemStack> {
         Map<Enchantment<?>, Integer> enchantments = getEnchantments();
         enchantments.remove(enchantment);
         saveEnchantments(enchantments);
+        if (enchantment instanceof VanillaEnchantment vanillaEnchantment)
+            item.removeEnchantment(vanillaEnchantment.getVanilla());
     }
 
     @Override
