@@ -10,10 +10,12 @@ import com.wizardlybump17.enchantments.paper.util.Converter;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -122,7 +124,7 @@ public class PaperItem implements Item<ItemStack> {
         return item.getItemMeta() != null;
     }
 
-    public static @NonNull PaperItem of(@NonNull ItemStack item) {
-        return new PaperItem(item);
+    public static @NonNull PaperItem of(@Nullable ItemStack item) {
+        return new PaperItem(item == null ? new ItemStack(Material.AIR) : item);
     }
 }
