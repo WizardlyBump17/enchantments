@@ -7,6 +7,11 @@ import lombok.NonNull;
 
 import java.util.Collections;
 
+/**
+ * <p>
+ *     An invalid {@link Enchantment} object, so all {@link Enchantment}s can be non-null.
+ * </p>
+ */
 public final class InvalidEnchantment extends Enchantment<EnchantmentActivation> {
 
     public InvalidEnchantment(@NonNull Id id) {

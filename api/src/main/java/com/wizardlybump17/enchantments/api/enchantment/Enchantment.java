@@ -10,12 +10,26 @@ import lombok.NonNull;
 
 import java.util.*;
 
+/**
+ * <p>
+ *     An enchantment.
+ * </p>
+ * @param <A> what makes {@code this} {@link Enchantment} activate
+ */
 @Data
 public abstract class Enchantment<A extends EnchantmentActivation> implements Identifiable {
 
     private final @NonNull EnchantmentHolder holder;
     private final @NonNull Id id;
     private final String name;
+    /**
+     * -- GETTER --
+     * <p>
+     *     The maximum level of {@code this} {@link Enchantment}.
+     *     This is ignored by default.
+     * </p>
+     * @return the maximum level of {@code this} {@link Enchantment}
+     */
     private final int maxLevel;
     private final @NonNull Map<Object, List<EnchantmentListener>> listeners;
     private final @NonNull Map<Integer, A> activations = new TreeMap<>();
