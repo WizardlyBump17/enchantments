@@ -33,10 +33,7 @@ public class PaperItem implements Item<ItemStack> {
     public @NonNull Map<Enchantment<?>, Integer> getEnchantments() {
         if (!isValid())
             return Collections.emptyMap();
-
-        ItemMeta meta = item.getItemMeta();
-        Map<Enchantment<?>, Integer> enchantments = meta.getPersistentDataContainer().get(ENCHANTMENTS, EnchantmentsMapType.INSTANCE);
-        return enchantments == null ? new HashMap<>() : enchantments;
+        return getEnchantments(item.getItemMeta().getPersistentDataContainer());
     }
 
     @Override
@@ -109,8 +106,7 @@ public class PaperItem implements Item<ItemStack> {
             return;
 
         ItemMeta meta = item.getItemMeta();
-        PersistentDataContainer container = meta.getPersistentDataContainer();
-        container.set(ENCHANTMENTS, EnchantmentsMapType.INSTANCE, enchantments);
+        setEnchantments(meta.getPersistentDataContainer(), enchantments);
         item.setItemMeta(meta);
     }
 
@@ -126,5 +122,15 @@ public class PaperItem implements Item<ItemStack> {
 
     public static @NonNull PaperItem of(@Nullable ItemStack item) {
         return new PaperItem(item == null ? new ItemStack(Material.AIR) : item);
+    }
+
+    public static @NonNull Map<Enchantment<?>, Integer> getEnchantments(@NonNull PersistentDataContainer container) {
+        Map<Enchantment<?>, Integer> enchantments = container.get(ENCHANTMENTS, EnchantmentsMapType.INSTANCE);
+        return enchantments == null ? new HashMap<>() : enchantments;
+    }
+
+
+    public static void setEnchantments(@NonNull PersistentDataContainer container, @NonNull Map<Enchantment<?>, Integer> enchantments) {
+        container.set(ENCHANTMENTS, EnchantmentsMapType.INSTANCE, enchantments);
     }
 }
