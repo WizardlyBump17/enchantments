@@ -46,10 +46,13 @@ public class PaperItem implements Item<ItemStack> {
 
     @Override
     public void addEnchantment(@NonNull Enchantment<?> enchantment, int level) {
+        addEnchantment(enchantment.getId(), level);
+    }
+
+    @Override
+    public void addEnchantment(@NonNull Id id, int level) {
         if (!isValid())
             return;
-
-        Id id = enchantment.getId();
 
         Map<Id, Integer> enchantments = getEnchantmentIds();
         if (level < 1)
@@ -59,7 +62,7 @@ public class PaperItem implements Item<ItemStack> {
 
         saveEnchantmentIds(enchantments);
 
-        if (!(enchantment instanceof VanillaEnchantment vanillaEnchantment))
+        if (!(EnchantmentRegistry.INSTANCE.get(id) instanceof VanillaEnchantment vanillaEnchantment))
             return;
 
         org.bukkit.enchantments.Enchantment vanilla = vanillaEnchantment.getVanilla();
@@ -70,50 +73,45 @@ public class PaperItem implements Item<ItemStack> {
     }
 
     @Override
-    public void addEnchantment(@NonNull Id id, int level) {
-        addEnchantment(EnchantmentRegistry.INSTANCE.get(id), level);
-    }
-
-    @Override
     public void removeEnchantment(@NonNull Enchantment<?> enchantment) {
-        if (!isValid())
-            return;
-
-        Map<Id, Integer> enchantments = getEnchantmentIds();
-        enchantments.remove(enchantment.getId());
-        saveEnchantmentIds(enchantments);
-        if (enchantment instanceof VanillaEnchantment vanillaEnchantment)
-            item.removeEnchantment(vanillaEnchantment.getVanilla());
+        removeEnchantment(enchantment.getId());
     }
 
     @Override
     public void removeEnchantment(@NonNull Id id) {
-        removeEnchantment(EnchantmentRegistry.INSTANCE.get(id));
+        if (!isValid())
+            return;
+
+        Map<Id, Integer> enchantments = getEnchantmentIds();
+        enchantments.remove(id);
+        saveEnchantmentIds(enchantments);
+        if (EnchantmentRegistry.INSTANCE.get(id) instanceof VanillaEnchantment vanillaEnchantment)
+            item.removeEnchantment(vanillaEnchantment.getVanilla());
     }
 
     @Override
     public void clearEnchantments() {
-        saveEnchantments(Collections.emptyMap());
+        saveEnchantmentIds(Collections.emptyMap());
     }
 
     @Override
     public boolean hasEnchantment(@NonNull Enchantment<?> enchantment) {
-        return getEnchantmentIds().containsKey(enchantment.getId());
+        return hasEnchantment(enchantment.getId());
     }
 
     @Override
     public boolean hasEnchantment(@NonNull Id id) {
-        return hasEnchantment(EnchantmentRegistry.INSTANCE.get(id));
+        return getEnchantmentIds().containsKey(id);
     }
 
     @Override
     public int getEnchantmentLevel(@NonNull Enchantment<?> enchantment) {
-        return getEnchantmentIds().getOrDefault(enchantment.getId(), 0);
+        return getEnchantmentLevel(enchantment.getId());
     }
 
     @Override
     public int getEnchantmentLevel(@NonNull Id id) {
-        return getEnchantmentLevel(EnchantmentRegistry.INSTANCE.get(id));
+        return getEnchantmentIds().getOrDefault(id, 0);
     }
 
     protected void saveEnchantments(@NonNull Map<Enchantment<?>, Integer> enchantments) {
