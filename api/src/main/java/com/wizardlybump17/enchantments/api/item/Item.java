@@ -13,6 +13,8 @@ public interface Item<H> {
 
     void addEnchantment(@NonNull Enchantment<?> enchantment, int level);
 
+    void addEnchantment(@NonNull Id id, int level);
+
     void removeEnchantment(@NonNull Enchantment<?> enchantment);
 
     void removeEnchantment(@NonNull Id id);

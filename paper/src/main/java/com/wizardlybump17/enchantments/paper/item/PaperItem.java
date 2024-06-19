@@ -60,6 +60,11 @@ public class PaperItem implements Item<ItemStack> {
     }
 
     @Override
+    public void addEnchantment(@NonNull Id id, int level) {
+        addEnchantment(EnchantmentRegistry.INSTANCE.get(id), level);
+    }
+
+    @Override
     public void removeEnchantment(@NonNull Enchantment<?> enchantment) {
         if (!isValid())
             return;
