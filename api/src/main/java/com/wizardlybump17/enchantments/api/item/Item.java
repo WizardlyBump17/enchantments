@@ -11,6 +11,9 @@ public interface Item<H> {
     @NonNull
     Map<Enchantment<?>, Integer> getEnchantments();
 
+    @NonNull
+    Map<Id, Integer> getEnchantmentIds();
+
     void addEnchantment(@NonNull Enchantment<?> enchantment, int level);
 
     void addEnchantment(@NonNull Id id, int level);

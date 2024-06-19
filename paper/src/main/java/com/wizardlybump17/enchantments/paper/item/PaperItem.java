@@ -5,6 +5,7 @@ import com.wizardlybump17.enchantments.api.id.Id;
 import com.wizardlybump17.enchantments.api.item.Item;
 import com.wizardlybump17.enchantments.api.registry.EnchantmentRegistry;
 import com.wizardlybump17.enchantments.paper.enchantment.VanillaEnchantment;
+import com.wizardlybump17.enchantments.paper.persistence.EnchantmentsMapIdType;
 import com.wizardlybump17.enchantments.paper.persistence.EnchantmentsMapType;
 import com.wizardlybump17.enchantments.paper.util.Converter;
 import lombok.Getter;
@@ -37,17 +38,26 @@ public class PaperItem implements Item<ItemStack> {
     }
 
     @Override
+    public @NonNull Map<Id, Integer> getEnchantmentIds() {
+        if (!isValid())
+            return Collections.emptyMap();
+        return getEnchantmentIds(item.getItemMeta().getPersistentDataContainer());
+    }
+
+    @Override
     public void addEnchantment(@NonNull Enchantment<?> enchantment, int level) {
         if (!isValid())
             return;
 
-        Map<Enchantment<?>, Integer> enchantments = getEnchantments();
-        if (level < 1)
-            enchantments.remove(enchantment);
-        else
-            enchantments.put(enchantment, level);
+        Id id = enchantment.getId();
 
-        saveEnchantments(enchantments);
+        Map<Id, Integer> enchantments = getEnchantmentIds();
+        if (level < 1)
+            enchantments.remove(id);
+        else
+            enchantments.put(id, level);
+
+        saveEnchantmentIds(enchantments);
 
         if (!(enchantment instanceof VanillaEnchantment vanillaEnchantment))
             return;
@@ -69,9 +79,9 @@ public class PaperItem implements Item<ItemStack> {
         if (!isValid())
             return;
 
-        Map<Enchantment<?>, Integer> enchantments = getEnchantments();
-        enchantments.remove(enchantment);
-        saveEnchantments(enchantments);
+        Map<Id, Integer> enchantments = getEnchantmentIds();
+        enchantments.remove(enchantment.getId());
+        saveEnchantmentIds(enchantments);
         if (enchantment instanceof VanillaEnchantment vanillaEnchantment)
             item.removeEnchantment(vanillaEnchantment.getVanilla());
     }
@@ -88,7 +98,7 @@ public class PaperItem implements Item<ItemStack> {
 
     @Override
     public boolean hasEnchantment(@NonNull Enchantment<?> enchantment) {
-        return getEnchantments().containsKey(enchantment);
+        return getEnchantmentIds().containsKey(enchantment.getId());
     }
 
     @Override
@@ -98,7 +108,7 @@ public class PaperItem implements Item<ItemStack> {
 
     @Override
     public int getEnchantmentLevel(@NonNull Enchantment<?> enchantment) {
-        return getEnchantments().getOrDefault(enchantment, 0);
+        return getEnchantmentIds().getOrDefault(enchantment.getId(), 0);
     }
 
     @Override
@@ -112,6 +122,15 @@ public class PaperItem implements Item<ItemStack> {
 
         ItemMeta meta = item.getItemMeta();
         setEnchantments(meta.getPersistentDataContainer(), enchantments);
+        item.setItemMeta(meta);
+    }
+
+    protected void saveEnchantmentIds(@NonNull Map<Id, Integer> enchantments) {
+        if (!isValid())
+            return;
+
+        ItemMeta meta = item.getItemMeta();
+        setEnchantmentIds(meta.getPersistentDataContainer(), enchantments);
         item.setItemMeta(meta);
     }
 
@@ -134,8 +153,16 @@ public class PaperItem implements Item<ItemStack> {
         return enchantments == null ? new HashMap<>() : enchantments;
     }
 
+    public static @NonNull Map<Id, Integer> getEnchantmentIds(@NonNull PersistentDataContainer container) {
+        Map<Id, Integer> enchantments = container.get(ENCHANTMENTS, EnchantmentsMapIdType.INSTANCE);
+        return enchantments == null ? new HashMap<>() : enchantments;
+    }
 
     public static void setEnchantments(@NonNull PersistentDataContainer container, @NonNull Map<Enchantment<?>, Integer> enchantments) {
         container.set(ENCHANTMENTS, EnchantmentsMapType.INSTANCE, enchantments);
+    }
+
+    public static void setEnchantmentIds(@NonNull PersistentDataContainer container, @NonNull Map<Id, Integer> enchantments) {
+        container.set(ENCHANTMENTS, EnchantmentsMapIdType.INSTANCE, enchantments);
     }
 }
